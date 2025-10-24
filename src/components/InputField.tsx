@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     icon?: React.ReactNode;
-    label: string;
+    label?: string;
 }
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
