@@ -77,6 +77,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto px-4 pt-6 pb-24 space-y-4">
                 <div>
                     <InputField
+                        label={activeTab === 'student' ? 'Email Siswa' : 'Email Tutor'}
                     icon={<Mail className="w-5 h-5 text-gray-400"/>}
                     placeholder={activeTab === 'student' ? 'Email Siswa' : 'Email Tutor'}
                     {...register('email')}
@@ -88,6 +89,7 @@ export default function LoginPage() {
                 </div>
                 <div>
                 <InputField
+                    label="Password"
                     icon={<Lock className="w-5 h-5 text-gray-400"/>}
                     type="password"
                     placeholder="••••••••"
