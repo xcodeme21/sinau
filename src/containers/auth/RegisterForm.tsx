@@ -16,9 +16,9 @@ const schema = z.object({
     phone: z.string().min(10, 'Nomor telepon tidak valid'),
     password: z.string().min(6, 'Password minimal 6 karakter'),
     confirmPassword: z.string(),
-    agreeToTerms: z.literal(true, {
-        errorMap: () => ({ message: 'Harus menyetujui syarat dan ketentuan' })
-    })
+    agreeToTerms: z.boolean().refine(val => val === true, {
+        message: 'Harus menyetujui syarat dan ketentuan',
+    }),
 }).refine(data => data.password === data.confirmPassword, {
     message: 'Password tidak cocok',
     path: ['confirmPassword']
