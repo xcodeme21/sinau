@@ -9,7 +9,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     ({ icon, label, ...props }, ref) => (
         <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                {label}
+                {label || ''}
             </label>
             <div className="relative">
                 {icon && (
