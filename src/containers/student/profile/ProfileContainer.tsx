@@ -42,9 +42,9 @@ export default function ProfileContainer() {
   const [isEditing, setIsEditing] = useState(false)
 
   const userProfile = {
-    name: 'Ahmad Rizki',
-    email: 'ahmad.rizki@email.com',
-    phone: '+62 812-3456-7890',
+    name: 'Agus Siswanto',
+    email: 'xcodeme21@gmail.com',
+    phone: '+6285703696988',
     location: 'Jakarta Selatan',
     joinDate: 'Januari 2024',
     avatar: '👨‍🎓',
