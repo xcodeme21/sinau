@@ -46,6 +46,7 @@ interface Category {
 
 export default function DashboardContainer() {
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [showNotifications, setShowNotifications] = useState(false)
 
   const categories: Category[] = [
     { id: 'all', name: 'Semua', icon: '📚' },
@@ -150,9 +151,58 @@ export default function DashboardContainer() {
               Selamat datang, Agus Siswanto
             </p>
           </div>
-          <button className="bg-white bg-opacity-20 p-3 rounded-2xl backdrop-blur-sm hover:bg-opacity-30 transition">
-            <Bell size={22} />
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="bg-white bg-opacity-20 p-3 rounded-2xl backdrop-blur-sm hover:bg-opacity-30 transition relative">
+              <Bell size={22} />
+              {/* Badge notifikasi */}
+              {announcements.length > 0 && (
+                <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+              )}
+            </button>
+
+            {/* Dropdown notifikasi */}
+            {showNotifications && (
+              <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg overflow-hidden z-50">
+                <div className="p-4 border-b border-gray-200 font-semibold text-gray-800">
+                  Notifikasi
+                </div>
+                <div className="max-h-60 overflow-y-auto">
+                  {announcements.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+                      <div
+                        className={`p-3 rounded-xl mr-3 ${
+                          item.category === 'Promo'
+                            ? 'bg-rose-50'
+                            : 'bg-blue-50'
+                        }`}>
+                        <Bell
+                          className={`${
+                            item.category === 'Promo'
+                              ? 'text-rose-500'
+                              : 'text-blue-500'
+                          }`}
+                          size={20}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800 text-sm">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-gray-500">{item.desc}</p>
+                        <span className="text-[10px] text-gray-400 flex items-center mt-1">
+                          <Clock size={10} className="mr-1" /> {item.time}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
