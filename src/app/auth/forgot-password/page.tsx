@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             <header className="w-full flex items-center h-16 px-4 bg-white shadow-sm fixed top-0 z-10">
-                <Link href="/" className="p-2 -ml-2">
+                <Link href="/public" className="p-2 -ml-2">
                     <ArrowLeft className="w-6 h-6 text-gray-700" />
                 </Link>
                 <h1 className="text-lg font-bold text-gray-800 ml-2">Lupa Password</h1>

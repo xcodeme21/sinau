@@ -8,6 +8,7 @@ import { Mail, Lock, GraduationCap, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import {InputField} from "@/components/InputField";
 import {Button} from "@/components/Button";
+import {useRouter} from "next/navigation";
 
 const loginSchema = z.object({
     email: z.string().min(1, 'Email wajib diisi').email('Format email tidak valid'),
@@ -19,6 +20,7 @@ type FormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState<'student' | 'teacher'>('student');
     const [rememberMe, setRememberMe] = useState(false);
+    const router = useRouter();
 
     const {
         register,
@@ -31,6 +33,9 @@ export default function LoginPage() {
 
     const onSubmit = (data: FormData) => {
         console.log('Login attempt:', { type: activeTab, ...data, rememberMe });
+        if(activeTab === "student") {
+            router.push('/student/dashboard')
+        }
     };
 
     return (

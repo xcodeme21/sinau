@@ -82,7 +82,7 @@ export default function RegisterPage() {
             </div>
 
             <main className="flex-1 overflow-y-auto px-4 pt-6 pb-24 space-y-4">
-                <form id="registerForm" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                <form id="registerForm" onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto px-4 pt-6 pb-24 space-y-4">
                     <div>
                         <InputField
                             icon={<User className="w-5 h-5 text-gray-400" />}
