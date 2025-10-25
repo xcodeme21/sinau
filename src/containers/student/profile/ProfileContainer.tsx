@@ -21,6 +21,7 @@ import {
   HelpCircle,
   TrendingUp,
 } from 'lucide-react'
+import Link from 'next/link'
 
 interface Achievement {
   id: number
@@ -368,10 +369,12 @@ export default function ProfileContainer() {
         </div>
 
         {/* Logout Button */}
-        <button className="w-full bg-white rounded-xl shadow-lg p-4 flex items-center justify-center gap-3 text-red-600 font-semibold hover:bg-red-50 transition">
+        <Link
+          href="/"
+          className="w-full bg-white rounded-xl shadow-lg p-4 flex items-center justify-center gap-3 text-red-600 font-semibold hover:bg-red-50 transition">
           <LogOut size={20} />
           <span>Keluar</span>
-        </button>
+        </Link>
       </div>
     </div>
   )
