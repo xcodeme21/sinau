@@ -208,7 +208,7 @@ export default function DashboardContainer() {
       </div>
 
       {/* Main Content */}
-      <div className="relative px-6 -mt-20 pb-6">
+      <div className="relative px-6 -mt-24 pb-6">
         {/* Quick Actions */}
         <div className="bg-white rounded-3xl shadow-xl p-6 mb-6">
           <div className="grid grid-cols-3 gap-4">
