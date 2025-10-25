@@ -213,7 +213,7 @@ export default function DashboardContainer() {
         <div className="bg-white rounded-3xl shadow-xl p-6 mb-6">
           <div className="grid grid-cols-3 gap-4">
             <button className="flex flex-col items-center">
-              <div className="bg-blue-50 p-3 rounded-2xl mb-1 hover:bg-blue-100 transition-all">
+              <div className="bg-blue-50 p-3 rounded-2xl mb-2 hover:bg-blue-100 transition-all">
                 <Search className="text-blue-500" size={22} strokeWidth={1.5} />
               </div>
               <span className="text-xs font-medium text-gray-700 text-center">
@@ -221,7 +221,7 @@ export default function DashboardContainer() {
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-purple-50 p-3 rounded-2xl mb-1 hover:bg-purple-100 transition-all">
+              <div className="bg-purple-50 p-3 rounded-2xl mb-2 hover:bg-purple-100 transition-all">
                 <Calendar
                   className="text-purple-500"
                   size={22}
@@ -233,7 +233,7 @@ export default function DashboardContainer() {
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-teal-50 p-3 rounded-2xl mb-1 hover:bg-teal-100 transition-all">
+              <div className="bg-teal-50 p-3 rounded-2xl mb-2 hover:bg-teal-100 transition-all">
                 <BookOpen
                   className="text-teal-500"
                   size={22}
@@ -248,7 +248,7 @@ export default function DashboardContainer() {
 
           <div className="grid grid-cols-3 gap-4 mt-4">
             <button className="flex flex-col items-center">
-              <div className="bg-orange-50 p-3 rounded-2xl mb-1 hover:bg-orange-100 transition-all">
+              <div className="bg-orange-50 p-3 rounded-2xl mb-2 hover:bg-orange-100 transition-all">
                 <MessageSquare
                   className="text-orange-500"
                   size={22}
@@ -260,7 +260,7 @@ export default function DashboardContainer() {
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-pink-50 p-3 rounded-2xl mb-1 hover:bg-pink-100 transition-all">
+              <div className="bg-pink-50 p-3 rounded-2xl mb-2 hover:bg-pink-100 transition-all">
                 <CreditCard
                   className="text-pink-500"
                   size={22}
@@ -272,7 +272,7 @@ export default function DashboardContainer() {
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-amber-50 p-3 rounded-2xl mb-1 hover:bg-amber-100 transition-all">
+              <div className="bg-amber-50 p-3 rounded-2xl mb-2 hover:bg-amber-100 transition-all">
                 <Award className="text-amber-500" size={22} strokeWidth={1.5} />
               </div>
               <span className="text-xs font-medium text-gray-700 text-center">
@@ -286,7 +286,7 @@ export default function DashboardContainer() {
 
         {/* Categories */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">
+          <h2 className="text-lg font-bold text-gray-800 mb-3">
             Kategori Pembelajaran
           </h2>
           <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
@@ -294,10 +294,10 @@ export default function DashboardContainer() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex flex-col items-center min-w-[85px] p-4 rounded-2xl transition-all ${
+                className={`flex flex-col items-center min-w-[75px] p-3 rounded-2xl transition-all ${
                   selectedCategory === cat.id
-                    ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md'
+                    ? 'bg-emerald-500 text-white shadow-md scale-105'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm'
                 }`}>
                 <span className="text-3xl mb-2">{cat.icon}</span>
                 <span className="text-xs font-medium">{cat.name}</span>
@@ -308,87 +308,88 @@ export default function DashboardContainer() {
 
         {/* Teacher Marketplace */}
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-gray-800">Tutor Terbaik</h2>
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="text-lg font-bold text-gray-800">Tutor Terbaik</h2>
             <button className="text-sm text-emerald-600 font-semibold">
               Lihat Semua →
             </button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {filteredTeachers.map((teacher) => (
               <div
                 key={teacher.id}
-                className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="p-6">
-                  <div className="flex gap-4 mb-4">
-                    <div className="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl w-20 h-20 flex items-center justify-center text-4xl flex-shrink-0">
+                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="p-4">
+                  <div className="flex gap-3 mb-2">
+                    <div className="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl w-16 h-16 flex items-center justify-center text-3xl flex-shrink-0">
                       {teacher.image}
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-start justify-between mb-1">
-                        <div>
-                          <h3 className="font-bold text-gray-800 text-lg">
-                            {teacher.name}
-                          </h3>
-                          <p className="text-emerald-600 text-sm font-semibold">
-                            {teacher.subject}
-                          </p>
-                        </div>
+                      {/* Nama & Badge */}
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-semibold text-gray-800 text-sm">
+                          {teacher.name}
+                        </h3>
                         {teacher.certified && (
-                          <span className="bg-blue-50 text-blue-600 text-xs px-3 py-1.5 rounded-full font-semibold">
+                          <span className="bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full font-medium">
                             ✓ Verified
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="flex items-center">
+
+                      {/* Subjek */}
+                      <p className="text-emerald-600 text-xs font-medium mb-1">
+                        {teacher.subject}
+                      </p>
+
+                      {/* Rating & pengalaman */}
+                      <div className="flex items-center gap-1 mb-1 text-xs text-gray-500">
+                        <div className="flex items-center gap-0.5">
                           <Star
-                            size={14}
+                            size={12}
                             className="text-yellow-500 fill-yellow-500"
                           />
-                          <span className="text-sm font-bold text-gray-800 ml-1">
+                          <span className="font-semibold text-gray-800">
                             {teacher.rating}
                           </span>
-                          <span className="text-xs text-gray-500 ml-1">
-                            ({teacher.reviews})
-                          </span>
+                          <span>({teacher.reviews})</span>
                         </div>
-                        <span className="text-gray-300">•</span>
-                        <span className="text-xs text-gray-600">
-                          {teacher.experience}
-                        </span>
+                        <span>•</span>
+                        <span>{teacher.experience}</span>
                       </div>
-                      <p className="text-xs text-gray-600 leading-relaxed">
-                        {teacher.bio}
-                      </p>
+
+                      {/* Bio */}
+                      <p className="text-xs text-gray-600">{teacher.bio}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 mb-4 text-sm">
-                    <div className="flex items-center text-gray-600">
-                      <MapPin size={14} className="mr-1" />
-                      <span className="text-xs">{teacher.location}</span>
+                  {/* Lokasi & Jadwal */}
+                  <div className="flex items-center gap-3 mb-2 text-xs text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <MapPin size={12} />
+                      <span>{teacher.location}</span>
                     </div>
-                    <div className="flex items-center text-gray-600">
-                      <Clock size={14} className="mr-1" />
-                      <span className="text-xs">{teacher.available}</span>
+                    <div className="flex items-center gap-1">
+                      <Clock size={12} />
+                      <span>{teacher.available}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  {/* Tarif & tombol */}
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Tarif</p>
-                      <p className="text-base font-bold text-emerald-600">
+                      <p className="text-xs text-gray-500 mb-0.5">Tarif</p>
+                      <p className="text-sm font-bold text-emerald-600">
                         {teacher.price}
                       </p>
                     </div>
-                    <div className="flex gap-2">
-                      <button className="bg-emerald-50 text-emerald-600 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-emerald-100 transition-all flex items-center gap-1.5">
-                        <Play size={14} />
+                    <div className="flex gap-1">
+                      <button className="bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-emerald-100 flex items-center gap-1">
+                        <Play size={12} />
                         Demo
                       </button>
-                      <button className="bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-emerald-600 transition-all shadow-md">
+                      <button className="bg-emerald-500 text-white px-4 py-1.5 rounded-lg text-xs font-medium hover:bg-emerald-600 shadow-sm">
                         Pesan
                       </button>
                     </div>
