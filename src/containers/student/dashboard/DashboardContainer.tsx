@@ -14,6 +14,7 @@ import {
   MessageSquare,
   Award,
 } from 'lucide-react'
+import PromoBanner from '@/containers/student/dashboard/PromoBanner'
 
 interface Teacher {
   id: number
@@ -209,132 +210,79 @@ export default function DashboardContainer() {
       {/* Main Content */}
       <div className="relative px-6 -mt-20 pb-6">
         {/* Quick Actions */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 mb-6">
-          <div className="grid grid-cols-3 gap-6">
+        <div className="bg-white rounded-3xl shadow-xl p-6 mb-6">
+          <div className="grid grid-cols-3 gap-4">
             <button className="flex flex-col items-center">
-              <div className="bg-blue-50 p-5 rounded-2xl mb-3 hover:bg-blue-100 transition-all">
-                <Search className="text-blue-500" size={28} strokeWidth={1.5} />
+              <div className="bg-blue-50 p-3 rounded-2xl mb-1 hover:bg-blue-100 transition-all">
+                <Search className="text-blue-500" size={22} strokeWidth={1.5} />
               </div>
-              <span className="text-sm font-medium text-gray-700 text-center">
+              <span className="text-xs font-medium text-gray-700 text-center">
                 Cari Tutor
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-purple-50 p-5 rounded-2xl mb-3 hover:bg-purple-100 transition-all">
+              <div className="bg-purple-50 p-3 rounded-2xl mb-1 hover:bg-purple-100 transition-all">
                 <Calendar
                   className="text-purple-500"
-                  size={28}
+                  size={22}
                   strokeWidth={1.5}
                 />
               </div>
-              <span className="text-sm font-medium text-gray-700 text-center">
+              <span className="text-xs font-medium text-gray-700 text-center">
                 Jadwal Kelas
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-teal-50 p-5 rounded-2xl mb-3 hover:bg-teal-100 transition-all">
+              <div className="bg-teal-50 p-3 rounded-2xl mb-1 hover:bg-teal-100 transition-all">
                 <BookOpen
                   className="text-teal-500"
-                  size={28}
+                  size={22}
                   strokeWidth={1.5}
                 />
               </div>
-              <span className="text-sm font-medium text-gray-700 text-center">
+              <span className="text-xs font-medium text-gray-700 text-center">
                 Kelas Saya
               </span>
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mt-6">
+          <div className="grid grid-cols-3 gap-4 mt-4">
             <button className="flex flex-col items-center">
-              <div className="bg-orange-50 p-5 rounded-2xl mb-3 hover:bg-orange-100 transition-all">
+              <div className="bg-orange-50 p-3 rounded-2xl mb-1 hover:bg-orange-100 transition-all">
                 <MessageSquare
                   className="text-orange-500"
-                  size={28}
+                  size={22}
                   strokeWidth={1.5}
                 />
               </div>
-              <span className="text-sm font-medium text-gray-700 text-center">
+              <span className="text-xs font-medium text-gray-700 text-center">
                 Pesan
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-pink-50 p-5 rounded-2xl mb-3 hover:bg-pink-100 transition-all">
+              <div className="bg-pink-50 p-3 rounded-2xl mb-1 hover:bg-pink-100 transition-all">
                 <CreditCard
                   className="text-pink-500"
-                  size={28}
+                  size={22}
                   strokeWidth={1.5}
                 />
               </div>
-              <span className="text-sm font-medium text-gray-700 text-center">
+              <span className="text-xs font-medium text-gray-700 text-center">
                 Pembayaran
               </span>
             </button>
             <button className="flex flex-col items-center">
-              <div className="bg-amber-50 p-5 rounded-2xl mb-3 hover:bg-amber-100 transition-all">
-                <Award className="text-amber-500" size={28} strokeWidth={1.5} />
+              <div className="bg-amber-50 p-3 rounded-2xl mb-1 hover:bg-amber-100 transition-all">
+                <Award className="text-amber-500" size={22} strokeWidth={1.5} />
               </div>
-              <span className="text-sm font-medium text-gray-700 text-center">
+              <span className="text-xs font-medium text-gray-700 text-center">
                 Sertifikat
               </span>
             </button>
           </div>
         </div>
 
-        {/* Announcements */}
-        <div className="mb-6">
-          <div className="flex items-center mb-4">
-            <Bell size={20} className="text-gray-700 mr-2" />
-            <h2 className="text-xl font-bold text-gray-800">
-              Pengumuman Terbaru
-            </h2>
-          </div>
-          {announcements.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl shadow-md p-5 mb-3 hover:shadow-lg transition-shadow">
-              <div className="flex items-start">
-                <div
-                  className={`p-3 rounded-xl mr-4 ${
-                    item.category === 'Promo' ? 'bg-rose-50' : 'bg-blue-50'
-                  }`}>
-                  <Bell
-                    className={`${
-                      item.category === 'Promo'
-                        ? 'text-rose-500'
-                        : 'text-blue-500'
-                    }`}
-                    size={20}
-                  />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-gray-800 text-base">
-                      {item.title}
-                    </h3>
-                    <span
-                      className={`text-xs px-3 py-1.5 rounded-full font-medium ${
-                        item.category === 'Promo'
-                          ? 'bg-rose-50 text-rose-600'
-                          : 'bg-blue-50 text-blue-600'
-                      }`}>
-                      {item.category}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3 leading-relaxed">
-                    {item.desc}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs text-gray-400 flex items-center">
-                      <Clock size={12} className="mr-1" />
-                      {item.time}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <PromoBanner />
 
         {/* Categories */}
         <div className="mb-6">
