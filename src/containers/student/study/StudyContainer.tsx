@@ -124,7 +124,6 @@ export default function StudyContainer() {
       </div>
 
       <div className="px-6 -mt-8">
-        {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           <div className="bg-white rounded-xl shadow-lg p-4 text-center">
             <div className="bg-blue-100 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2">
