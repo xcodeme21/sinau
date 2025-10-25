@@ -23,22 +23,6 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-interface Achievement {
-  id: number
-  title: string
-  description: string
-  icon: string
-  date: string
-}
-
-interface Activity {
-  id: number
-  title: string
-  description: string
-  date: string
-  type: 'class' | 'achievement' | 'payment'
-}
-
 export default function ProfileContainer() {
   const [isEditing, setIsEditing] = useState(false)
 
@@ -55,7 +39,7 @@ export default function ProfileContainer() {
     certificates: 1,
   }
 
-  const achievements: Achievement[] = [
+  const achievements = [
     {
       id: 1,
       title: 'Pemula Bersemangat',
@@ -79,7 +63,7 @@ export default function ProfileContainer() {
     },
   ]
 
-  const recentActivity: Activity[] = [
+  const recentActivity = [
     {
       id: 1,
       title: 'Menyelesaikan Sesi',
@@ -154,9 +138,7 @@ export default function ProfileContainer() {
       label: 'Kursus Aktif',
       value: userProfile.totalCourses,
       icon: BookOpen,
-      bgColor: 'from-blue-500 to-blue-600',
-      lightBg: 'bg-blue-50',
-      iconColor: 'text-blue-600',
+      color: 'blue',
       trend: '+2 bulan ini',
       trendUp: true,
     },
@@ -165,9 +147,7 @@ export default function ProfileContainer() {
       label: 'Diselesaikan',
       value: userProfile.completedCourses,
       icon: Target,
-      bgColor: 'from-emerald-500 to-emerald-600',
-      lightBg: 'bg-emerald-50',
-      iconColor: 'text-emerald-600',
+      color: 'emerald',
       trend: '25% progress',
       trendUp: true,
     },
@@ -176,9 +156,7 @@ export default function ProfileContainer() {
       label: 'Jam Belajar',
       value: userProfile.learningHours,
       icon: Clock,
-      bgColor: 'from-purple-500 to-purple-600',
-      lightBg: 'bg-purple-50',
-      iconColor: 'text-purple-600',
+      color: 'purple',
       trend: '+5 minggu ini',
       trendUp: true,
     },
@@ -187,63 +165,62 @@ export default function ProfileContainer() {
       label: 'Sertifikat',
       value: userProfile.certificates,
       icon: Award,
-      bgColor: 'from-yellow-500 to-yellow-600',
-      lightBg: 'bg-yellow-50',
-      iconColor: 'text-yellow-600',
+      color: 'yellow',
       trend: 'Segera!',
       trendUp: false,
     },
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-white pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 pt-8 pb-24 rounded-b-3xl shadow-lg">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Profil Saya</h1>
+      <div className="bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-500 text-white px-6 pt-8 pb-28 rounded-b-[40px] shadow-lg">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold">Profil Saya</h1>
+            <p className="text-sm opacity-80">Selamat datang kembali!</p>
+          </div>
           <button
             onClick={() => setIsEditing(!isEditing)}
-            className="bg-white bg-opacity-20 p-2 rounded-full backdrop-blur-sm hover:bg-opacity-30 transition">
+            className="bg-white bg-opacity-20 p-3 rounded-2xl backdrop-blur-sm hover:bg-opacity-30 transition">
             <Edit size={20} />
           </button>
         </div>
       </div>
 
-      <div className="px-6 -mt-16">
-        {/* Profile Card */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <div className="flex items-center gap-4 mb-6">
+      <div className="px-6 -mt-24">
+        {/* Profile Info */}
+        <div className="bg-white rounded-3xl shadow-xl p-6 mb-6">
+          <div className="flex items-center gap-5 mb-6">
             <div className="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full w-20 h-20 flex items-center justify-center text-4xl">
               {userProfile.avatar}
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-gray-800 mb-1">
+              <h2 className="text-xl font-bold text-gray-800">
                 {userProfile.name}
               </h2>
-              <p className="text-sm text-gray-600 mb-2">
+              <p className="text-sm text-gray-500">
                 Member sejak {userProfile.joinDate}
               </p>
-              <div className="flex items-center gap-2">
-                <span className="bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium">
-                  ⭐ Active Learner
-                </span>
-              </div>
+              <span className="mt-2 inline-block bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium">
+                ⭐ Active Learner
+              </span>
             </div>
           </div>
 
-          {/* Contact Info */}
-          <div className="space-y-3 mb-6">
-            <div className="flex items-center gap-3 text-gray-600">
-              <Mail size={18} className="text-emerald-500" />
-              <span className="text-sm">{userProfile.email}</span>
+          {/* Contact */}
+          <div className="space-y-3 text-gray-600 mb-6">
+            <div className="flex items-center gap-3 text-sm">
+              <Mail size={18} className="text-emerald-500" />{' '}
+              {userProfile.email}
             </div>
-            <div className="flex items-center gap-3 text-gray-600">
-              <Phone size={18} className="text-emerald-500" />
-              <span className="text-sm">{userProfile.phone}</span>
+            <div className="flex items-center gap-3 text-sm">
+              <Phone size={18} className="text-emerald-500" />{' '}
+              {userProfile.phone}
             </div>
-            <div className="flex items-center gap-3 text-gray-600">
-              <MapPin size={18} className="text-emerald-500" />
-              <span className="text-sm">{userProfile.location}</span>
+            <div className="flex items-center gap-3 text-sm">
+              <MapPin size={18} className="text-emerald-500" />{' '}
+              {userProfile.location}
             </div>
           </div>
 
@@ -254,23 +231,23 @@ export default function ProfileContainer() {
               return (
                 <div
                   key={stat.id}
-                  className="bg-white rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer border border-gray-100">
+                  className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 shadow-md hover:shadow-lg hover:scale-[1.03] transition duration-300 border border-gray-100 cursor-pointer">
                   <div
-                    className={`bg-gradient-to-br ${stat.bgColor} w-12 h-12 rounded-xl flex items-center justify-center mb-3 shadow-md`}>
-                    <Icon size={24} className="text-white" />
+                    className={`bg-${stat.color}-100 w-12 h-12 rounded-xl flex items-center justify-center mb-3`}>
+                    <Icon size={22} className={`text-${stat.color}-600`} />
                   </div>
-                  <p className="text-3xl font-bold text-gray-800 mb-1">
+                  <p className="text-2xl font-bold text-gray-800 mb-1">
                     {stat.value}
                   </p>
-                  <p className="text-xs font-medium text-gray-600 mb-2">
+                  <p className="text-xs font-medium text-gray-500 mb-1">
                     {stat.label}
                   </p>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 text-xs text-gray-400">
                     <TrendingUp
                       size={12}
                       className={`${stat.trendUp ? 'text-green-500' : 'text-gray-400'}`}
                     />
-                    <span className="text-xs text-gray-500">{stat.trend}</span>
+                    {stat.trend}
                   </div>
                 </div>
               )
@@ -280,41 +257,38 @@ export default function ProfileContainer() {
 
         {/* Achievements */}
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex justify-between items-center mb-3">
             <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <Trophy className="text-yellow-500" size={20} />
-              Pencapaian
+              <Trophy className="text-yellow-500" size={20} /> Pencapaian
             </h2>
-            <button className="text-emerald-600 text-sm font-medium">
+            <button className="text-emerald-600 text-sm font-medium hover:underline">
               Lihat Semua
             </button>
           </div>
           <div className="grid grid-cols-3 gap-3">
-            {achievements.map((achievement) => (
+            {achievements.map((ach) => (
               <div
-                key={achievement.id}
-                className="bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition">
-                <div className="text-4xl mb-2">{achievement.icon}</div>
-                <h3 className="font-bold text-gray-800 text-xs mb-1">
-                  {achievement.title}
+                key={ach.id}
+                className="bg-white rounded-2xl shadow-md p-4 text-center hover:shadow-lg hover:scale-[1.03] transition">
+                <div className="text-4xl mb-2">{ach.icon}</div>
+                <h3 className="font-semibold text-gray-800 text-sm mb-1">
+                  {ach.title}
                 </h3>
-                <p className="text-xs text-gray-600 leading-tight">
-                  {achievement.description}
-                </p>
+                <p className="text-xs text-gray-500">{ach.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Menu Items */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-6">
-          {menuItems.map((item, index) => (
+        {/* Menu */}
+        <div className="bg-white rounded-3xl shadow-md overflow-hidden mb-6">
+          {menuItems.map((item, i) => (
             <button
-              key={index}
-              className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition border-b border-gray-100 last:border-b-0">
+              key={i}
+              className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 border-b border-gray-100 last:border-none transition">
               <div className="flex items-center gap-3">
                 <div
-                  className={`${item.bg} w-10 h-10 rounded-full flex items-center justify-center`}>
+                  className={`${item.bg} w-10 h-10 rounded-xl flex items-center justify-center`}>
                   <span className={item.color}>{item.icon}</span>
                 </div>
                 <span className="text-gray-800 font-medium text-sm">
@@ -332,48 +306,40 @@ export default function ProfileContainer() {
             Aktivitas Terbaru
           </h2>
           <div className="space-y-3">
-            {recentActivity.map((activity) => (
-              <div key={activity.id} className="bg-white rounded-xl shadow p-4">
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      activity.type === 'class'
-                        ? 'bg-blue-100'
-                        : activity.type === 'achievement'
-                          ? 'bg-yellow-100'
-                          : 'bg-emerald-100'
-                    }`}>
-                    {activity.type === 'class' && (
-                      <BookOpen size={18} className="text-blue-600" />
-                    )}
-                    {activity.type === 'achievement' && (
-                      <Star size={18} className="text-yellow-600" />
-                    )}
-                    {activity.type === 'payment' && (
-                      <CreditCard size={18} className="text-emerald-600" />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-800 text-sm mb-1">
-                      {activity.title}
-                    </h3>
-                    <p className="text-xs text-gray-600 mb-1">
-                      {activity.description}
-                    </p>
-                    <p className="text-xs text-gray-400">{activity.date}</p>
-                  </div>
+            {recentActivity.map((act) => (
+              <div
+                key={act.id}
+                className="bg-white rounded-2xl shadow-md p-4 flex items-start gap-3 hover:shadow-lg transition">
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    act.type === 'class'
+                      ? 'bg-blue-100 text-blue-600'
+                      : act.type === 'achievement'
+                        ? 'bg-yellow-100 text-yellow-600'
+                        : 'bg-emerald-100 text-emerald-600'
+                  }`}>
+                  {act.type === 'class' && <BookOpen size={18} />}
+                  {act.type === 'achievement' && <Star size={18} />}
+                  {act.type === 'payment' && <CreditCard size={18} />}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800 text-sm">
+                    {act.title}
+                  </h3>
+                  <p className="text-xs text-gray-500">{act.description}</p>
+                  <p className="text-[11px] text-gray-400 mt-1">{act.date}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Logout Button */}
+        {/* Logout */}
         <Link
           href="/"
-          className="w-full bg-white rounded-xl shadow-lg p-4 flex items-center justify-center gap-3 text-red-600 font-semibold hover:bg-red-50 transition">
-          <LogOut size={20} />
-          <span>Keluar</span>
+          className="w-full bg-white rounded-2xl shadow-md py-4 flex items-center justify-center gap-2 text-red-600 font-semibold hover:bg-red-50 transition">
+          <LogOut size={18} />
+          Keluar
         </Link>
       </div>
     </div>
