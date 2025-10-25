@@ -13,17 +13,16 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json",       // <-- Add this
+    "tsconfigRootDir": ".",              // <-- Add this
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "plugins": ["@typescript-eslint", "react", "simple-import-sort"],
   "rules": {
-    "camelcase": [
-      "error",
-      {
-        "properties": "never"
-      }
-    ],
-    //"no-console": ["error"],
+    "camelcase": ["error", { "properties": "never" }],
     "prefer-const": ["error"],
     "react/jsx-one-expression-per-line": "off",
     "simple-import-sort/exports": "warn",
@@ -38,16 +37,7 @@
           ["^@/components", "^@/container"],
           ["^@/store"],
           ["^@/"],
-          [
-            "^\\./?$",
-            "^\\.(?!/?$)",
-            "^\\.\\./?$",
-            "^\\.\\.(?!/?$)",
-            "^\\.\\./\\.\\./?$",
-            "^\\.\\./\\.\\.(?!/?$)",
-            "^\\.\\./\\.\\./\\.\\./?$",
-            "^\\.\\./\\.\\./\\.\\.(?!/?$)"
-          ],
+          ["^\\./?$", "^\\.(?!/?$)", "^\\.\\./?$", "^\\.\\.(?!/?$)", "^\\.\\./\\.\\./?$", "^\\.\\./\\.\\.(?!/?$)", "^\\.\\./\\.\\./\\.\\./?$", "^\\.\\./\\.\\./\\.\\.(?!/?$)"],
           ["^@/types"],
           ["^"]
         ]

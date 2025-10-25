@@ -1,5 +1,5 @@
-import StudyContainer from "@/containers/student/study/StudyContainer";
+import StudyContainer from '@/containers/student/study/StudyContainer'
 
 export default function BelajarPage() {
-    return <StudyContainer />;
+  return <StudyContainer />
 }
