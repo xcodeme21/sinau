@@ -13,10 +13,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <link rel="manifest" href="/manifest.json" />
-      <meta name="theme-color" content="#10B981" />
-      <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-      <body className="antialiased bg-gray-50">{children}</body>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#10B981" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+      </head>
+      <body className="antialiased max-w-[480px] mx-auto bg-gray-50 min-h-screen shadow-lg">
+        {children}
+      </body>
     </html>
   )
 }
