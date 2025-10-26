@@ -1,18 +1,17 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
-  Calendar,
   Bell,
-  CreditCard,
-  MapPin,
   Star,
-  Clock,
-  Play,
-  BookOpen,
   Search,
-  MessageSquare,
-  Award,
+  Settings,
+  Layers,
+  ChevronRight,
+  MapPin,
+  Share2,
+  Heart,
+  Clock,
 } from 'lucide-react'
 import PromoBanner from '@/containers/student/dashboard/PromoBanner'
 
@@ -22,21 +21,13 @@ interface Teacher {
   subject: string
   category: string
   rating: number
-  reviews: number
+  reviews: string
   price: string
-  location: string
-  experience: string
   image: string
-  available: string
   certified: boolean
-  bio: string
-}
-
-interface Announcement {
-  title: string
-  desc: string
-  time: string
-  category: string
+  discount?: string
+  location: string
+  schedule: string
 }
 
 interface Category {
@@ -47,15 +38,12 @@ interface Category {
 
 export default function DashboardContainer() {
   const [selectedCategory, setSelectedCategory] = useState('all')
-  const [showNotifications, setShowNotifications] = useState(false)
 
   const categories: Category[] = [
     { id: 'all', name: 'Semua', icon: '📚' },
     { id: 'music', name: 'Musik', icon: '🎵' },
     { id: 'language', name: 'Bahasa', icon: '💬' },
     { id: 'coding', name: 'Coding', icon: '💻' },
-    { id: 'sports', name: 'Olahraga', icon: '⚽' },
-    { id: 'art', name: 'Seni', icon: '🎨' },
   ]
 
   const teachers: Teacher[] = [
@@ -65,74 +53,55 @@ export default function DashboardContainer() {
       subject: 'Gitar & Musik',
       category: 'music',
       rating: 4.9,
-      reviews: 127,
-      price: 'Rp 150.000/jam',
-      location: 'Jakarta Selatan',
-      experience: '8 tahun',
+      reviews: '2k',
+      price: '190.000',
       image: '🎸',
-      available: 'Senin, Rabu, Jumat',
       certified: true,
-      bio: 'Guru musik profesional dengan spesialisasi gitar klasik dan modern.',
+      discount: '20% OFF',
+      location: 'Jakarta Selatan',
+      schedule: 'Senin, Rabu, Jumat',
     },
     {
       id: 2,
       name: 'Sarah Wijaya',
       subject: 'Bahasa Inggris',
       category: 'language',
-      rating: 5.0,
-      reviews: 203,
-      price: 'Rp 200.000/jam',
-      location: 'Jakarta Pusat',
-      experience: '10 tahun',
+      rating: 4.2,
+      reviews: '6k',
+      price: '170.000',
       image: '📖',
-      available: 'Setiap hari',
       certified: true,
-      bio: 'Native speaker dengan sertifikasi TESOL dan IELTS.',
+      discount: '15% OFF',
+      location: 'Jakarta Pusat',
+      schedule: 'Setiap hari',
     },
     {
       id: 3,
       name: 'Andi Prasetyo',
       subject: 'Web Development',
       category: 'coding',
-      rating: 4.8,
-      reviews: 89,
-      price: 'Rp 250.000/jam',
-      location: 'Online',
-      experience: '6 tahun',
+      rating: 4.9,
+      reviews: '2k',
+      price: '190.000',
       image: '👨‍💻',
-      available: 'Selasa, Kamis, Sabtu',
       certified: true,
-      bio: 'Full-stack developer dengan pengalaman di startup teknologi.',
+      discount: '20% OFF',
+      location: 'Online',
+      schedule: 'Selasa, Kamis, Sabtu',
     },
     {
       id: 4,
       name: 'Linda Kusuma',
       subject: 'Yoga & Fitness',
       category: 'sports',
-      rating: 4.9,
-      reviews: 156,
-      price: 'Rp 175.000/sesi',
-      location: 'Jakarta Barat',
-      experience: '5 tahun',
+      rating: 4.2,
+      reviews: '6k',
+      price: '170.000',
       image: '🧘‍♀️',
-      available: 'Senin–Jumat pagi',
       certified: true,
-      bio: 'Instruktur yoga bersertifikat internasional (RYT-200).',
-    },
-  ]
-
-  const announcements: Announcement[] = [
-    {
-      title: 'Promo Ramadan - Diskon 25%',
-      desc: 'Dapatkan diskon spesial 25% untuk pembelian paket 10 sesi pembelajaran.',
-      time: '2 jam yang lalu',
-      category: 'Promo',
-    },
-    {
-      title: 'Tutor Baru: Kelas Desain UI/UX',
-      desc: 'Instruktur senior dari industri tech kini tersedia.',
-      time: '1 hari yang lalu',
-      category: 'Kelas Baru',
+      discount: '10% OFF',
+      location: 'Jakarta Barat',
+      schedule: 'Senin–Jumat pagi',
     },
   ]
 
@@ -142,219 +111,200 @@ export default function DashboardContainer() {
       : teachers.filter((t) => t.category === selectedCategory)
 
   return (
-    <div className="w-full min-h-screen bg-gray-50">
+    <div className="w-full min-h-screen bg-gradient-to-b from-blue-50 to-white pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-br from-emerald-500 to-teal-500 text-white px-6 pt-8 pb-28 rounded-b-[36px] shadow-sm">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
-            <p className="text-sm text-white/90">
-              Selamat datang, Agus Siswanto 👋
-            </p>
+      <div className="bg-white px-5 pt-8 pb-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
+              A
+            </div>
+            <div>
+              <h2 className="text-base font-semibold text-gray-800">
+                Agus Siswanto
+              </h2>
+              <p className="text-xs text-gray-500 flex items-center gap-1">
+                <MapPin size={12} />
+                Jakarta, Indonesia
+              </p>
+            </div>
           </div>
-
-          {/* Notification */}
-          <div className="relative">
-            <button
-              onClick={() => setShowNotifications(!showNotifications)}
-              className="bg-white/20 p-3 rounded-2xl hover:bg-white/25 transition-all backdrop-blur-sm relative">
-              <Bell size={22} />
-              {announcements.length > 0 && (
-                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" />
-              )}
+          <div className="flex items-center gap-2">
+            <button className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100">
+              <Settings size={20} className="text-gray-600" />
             </button>
-
-            {/* Dropdown */}
-            {showNotifications && (
-              <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden z-50">
-                <div className="p-4 border-b text-gray-800 font-semibold">
-                  Notifikasi
-                </div>
-                <div className="max-h-60 overflow-y-auto">
-                  {announcements.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start p-4 hover:bg-gray-50 border-b border-gray-100">
-                      <div
-                        className={`p-3 rounded-xl mr-3 ${
-                          item.category === 'Promo'
-                            ? 'bg-rose-50 text-rose-500'
-                            : 'bg-blue-50 text-blue-500'
-                        }`}>
-                        <Bell size={18} />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-sm">{item.title}</h4>
-                        <p className="text-xs text-gray-500 leading-snug">
-                          {item.desc}
-                        </p>
-                        <div className="text-[10px] text-gray-400 flex items-center mt-1">
-                          <Clock size={10} className="mr-1" /> {item.time}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <button className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100 relative">
+              <Bell size={20} className="text-gray-600" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
           </div>
+        </div>
+
+        {/* Search */}
+        <div className="relative">
+          <Search
+            size={18}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          />
+          <input
+            type="text"
+            placeholder="Cari Tutor..."
+            className="w-full pl-12 pr-12 py-3.5 rounded-xl bg-gray-50 border-none text-sm focus:outline-none focus:ring-2 focus:ring-blue-100"
+          />
+          <button className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-blue-500 rounded-lg">
+            <div className="flex flex-col gap-0.5">
+              <div className="w-4 h-0.5 bg-white rounded"></div>
+              <div className="w-3 h-0.5 bg-white rounded"></div>
+              <div className="w-2 h-0.5 bg-white rounded"></div>
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* Main */}
-      <div className="relative px-6 -mt-20 pb-10 max-w-md mx-auto">
-        {/* Quick Actions */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 mb-6 shadow-sm">
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              {
-                icon: Search,
-                color: 'text-blue-500',
-                bg: 'bg-blue-50',
-                label: 'Cari Tutor',
-              },
-              {
-                icon: Calendar,
-                color: 'text-purple-500',
-                bg: 'bg-purple-50',
-                label: 'Jadwal Kelas',
-              },
-              {
-                icon: BookOpen,
-                color: 'text-teal-500',
-                bg: 'bg-teal-50',
-                label: 'Kelas Saya',
-              },
-              {
-                icon: MessageSquare,
-                color: 'text-orange-500',
-                bg: 'bg-orange-50',
-                label: 'Pesan',
-              },
-              {
-                icon: CreditCard,
-                color: 'text-pink-500',
-                bg: 'bg-pink-50',
-                label: 'Pembayaran',
-              },
-              {
-                icon: Award,
-                color: 'text-amber-500',
-                bg: 'bg-amber-50',
-                label: 'Sertifikat',
-              },
-            ].map((item, i) => (
-              <button
-                key={i}
-                className="flex flex-col items-center text-center hover:scale-105 transition-all">
-                <div className={`${item.bg} p-3 rounded-xl mb-2`}>
-                  <item.icon
-                    size={20}
-                    className={item.color}
-                    strokeWidth={1.6}
-                  />
-                </div>
-                <span className="text-[11px] text-gray-700 font-medium">
-                  {item.label}
-                </span>
-              </button>
-            ))}
+      <PromoBanner />
+
+      {/* Special Request Banner */}
+      <div className="px-5 mb-6">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-4 flex items-center gap-4">
+          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+            <Layers size={24} className="text-white" />
           </div>
+          <div className="flex-1">
+            <h4 className="text-white font-semibold text-sm mb-0.5">
+              Permintaan Khusus
+            </h4>
+            <p className="text-white/80 text-xs leading-relaxed">
+              Ajukan permintaan khusus untuk pembelajaran yang Anda inginkan...
+            </p>
+          </div>
+          <ChevronRight size={20} className="text-white/80" />
         </div>
+      </div>
 
-        <PromoBanner />
-
-        {/* Category */}
-        <div className="mb-8">
-          <h2 className="text-base font-semibold text-gray-800 mb-3">
-            Kategori Pembelajaran
-          </h2>
-          <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`flex flex-col items-center min-w-[80px] p-3 rounded-xl border transition-all ${
-                  selectedCategory === cat.id
-                    ? 'bg-emerald-500 text-white border-emerald-500 scale-105'
-                    : 'bg-white border-gray-200 hover:border-emerald-300 text-gray-700'
-                }`}>
-                <span className="text-2xl mb-1">{cat.icon}</span>
-                <span className="text-xs font-medium">{cat.name}</span>
-              </button>
-            ))}
-          </div>
+      {/* Categories */}
+      <div className="px-5 mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-semibold text-gray-800">
+            Semua Kategori
+          </h3>
+          <button className="text-xs text-gray-500 hover:text-gray-700">
+            Lihat semua
+          </button>
         </div>
-
-        {/* Teachers */}
-        <div>
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-base font-semibold text-gray-800">
-              Tutor Terbaik
-            </h2>
-            <button className="text-xs text-emerald-600 font-medium hover:underline">
-              Lihat Semua →
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {filteredTeachers.map((teacher) => (
+        <div className="grid grid-cols-4 gap-3">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`flex flex-col items-center p-3 rounded-2xl transition-all ${
+                selectedCategory === cat.id
+                  ? 'bg-blue-50'
+                  : 'bg-gray-50 hover:bg-gray-100'
+              }`}>
               <div
-                key={teacher.id}
-                className="bg-white border border-gray-100 rounded-xl p-4 hover:border-emerald-400 transition-all">
-                <div className="flex gap-3">
-                  <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-100 to-teal-100 text-2xl rounded-lg">
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-2 ${
+                  selectedCategory === cat.id ? 'bg-white' : 'bg-white'
+                }`}>
+                <span className="text-2xl">{cat.icon}</span>
+              </div>
+              <span className="text-xs font-medium text-gray-700">
+                {cat.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Top Rated Service */}
+      <div className="px-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-semibold text-gray-800">
+            Tutor Terbaik
+          </h3>
+          <button className="text-xs text-gray-500 hover:text-gray-700">
+            Lihat semua
+          </button>
+        </div>
+
+        <div className="space-y-3">
+          {filteredTeachers.map((teacher) => (
+            <div
+              key={teacher.id}
+              className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100">
+              <div className="flex gap-3">
+                {/* Image */}
+                <div className="relative flex-shrink-0">
+                  <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-4xl">
                     {teacher.image}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-semibold text-gray-800 text-sm">
-                        {teacher.name}
-                      </h3>
-                      {teacher.certified && (
-                        <span className="text-[10px] text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded-full">
-                          ✓ Verified
-                        </span>
-                      )}
+                  {teacher.discount && (
+                    <div className="absolute top-1 left-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                      {teacher.discount}
                     </div>
-                    <p className="text-xs text-emerald-600">
-                      {teacher.subject}
-                    </p>
-                    <div className="flex items-center text-[11px] text-gray-500 mt-1">
-                      <Star
-                        size={12}
-                        className="text-yellow-500 fill-yellow-500 mr-1"
-                      />
-                      {teacher.rating} ({teacher.reviews})
-                      <span className="mx-1 text-gray-300">•</span>
-                      {teacher.experience}
-                    </div>
-                    <p className="text-[11px] text-gray-600 mt-1 line-clamp-2">
-                      {teacher.bio}
-                    </p>
-                  </div>
+                  )}
                 </div>
 
-                <div className="flex justify-between items-center mt-3 pt-2 border-t border-gray-100">
-                  <div>
-                    <p className="text-[10px] text-gray-500">Tarif</p>
-                    <p className="text-sm font-semibold text-emerald-600">
-                      {teacher.price}
-                    </p>
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-sm text-gray-800 mb-0.5">
+                    {teacher.name}
+                  </h4>
+                  <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+                    <span>⚡</span>
+                    {teacher.subject}
+                  </p>
+
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-1">
+                      <Star
+                        size={12}
+                        className="text-yellow-500 fill-yellow-500"
+                      />
+                      <span className="text-xs font-medium text-gray-700">
+                        {teacher.rating}
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        ({teacher.reviews})
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <button className="px-3 py-1.5 text-xs rounded-lg border border-emerald-400 text-emerald-600 hover:bg-emerald-50 flex items-center gap-1">
-                      <Play size={12} />
-                      Demo
-                    </button>
-                    <button className="px-4 py-1.5 text-xs rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm">
-                      Pesan
-                    </button>
+
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-center gap-1">
+                      <MapPin size={12} className="text-gray-400" />
+                      <span className="text-xs text-gray-500">
+                        {teacher.location}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1 mb-2">
+                    <Clock size={12} className="text-gray-400" />
+                    <span className="text-xs text-gray-500">
+                      {teacher.schedule}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-lg font-bold text-blue-500">
+                        {teacher.price}
+                      </span>
+                      <span className="text-xs text-gray-500"> /jam</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
+                        <Share2 size={16} className="text-gray-600" />
+                      </button>
+                      <button className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
+                        <Heart size={16} className="text-gray-600" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

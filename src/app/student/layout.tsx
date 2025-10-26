@@ -2,53 +2,111 @@
 
 import React from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { Home, Users, BookOpen, User } from 'lucide-react'
+import { Home, Grid3x3, Layers, MessageSquare, User } from 'lucide-react'
 
 interface StudentLayoutProps {
   children: React.ReactNode
 }
 
-export default function StudentLayout({ children }: StudentLayoutProps) {
+export default function Layout({ children }: StudentLayoutProps) {
   const pathname = usePathname()
   const router = useRouter()
 
-  const navItems = [
-    {
-      id: 'dashboard',
-      label: 'Beranda',
-      icon: Home,
-      path: '/student/dashboard',
-    },
-    { id: 'tutor', label: 'Tutor', icon: Users, path: '/student/tutor' },
-    { id: 'study', label: 'Belajar', icon: BookOpen, path: '/student/study' },
-    { id: 'profile', label: 'Profil', icon: User, path: '/student/profile' },
-  ]
+  const handleNavigation = (path: string) => {
+    router.push(path)
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white text-gray-800">
+    <div className="w-full min-h-screen bg-gray-50">
       {/* Main Content */}
-      <main className="pb-20">{children}</main>
+      <main className="w-full pb-24">{children}</main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-3 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md w-[90%] max-w-md px-6 py-2 flex justify-between items-center z-50">
-        {navItems.map((item) => {
-          const Icon = item.icon
-          const active = pathname === item.path
-          return (
+      <nav className="fixed bottom-0 left-0 right-0 bg-white z-50">
+        <div className="w-full max-w-screen-sm mx-auto relative">
+          <div className="flex justify-around items-end px-4 py-3">
+            {/* Home */}
             <button
-              key={item.id}
-              onClick={() => router.push(item.path)}
-              className={`flex flex-col items-center text-xs transition-all ${
-                active ? 'text-emerald-600 font-semibold' : 'text-gray-400'
-              }`}>
-              <Icon size={22} strokeWidth={2} />
-              <span className="mt-1">{item.label}</span>
-              {active && (
-                <span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              )}
+              onClick={() => handleNavigation('/student/dashboard')}
+              className="flex flex-col items-center justify-center min-w-[60px] pb-1">
+              <Home
+                size={24}
+                strokeWidth={2}
+                className={
+                  pathname === '/student/dashboard'
+                    ? 'text-gray-900'
+                    : 'text-gray-400'
+                }
+              />
+              <span className="text-[10px] font-medium text-gray-500 mt-1">
+                Home
+              </span>
             </button>
-          )
-        })}
+
+            {/* Explore */}
+            <button
+              onClick={() => handleNavigation('/student/tutor')}
+              className="flex flex-col items-center justify-center min-w-[60px] pb-1">
+              <Grid3x3
+                size={24}
+                strokeWidth={2}
+                className={
+                  pathname === '/student/tutor'
+                    ? 'text-gray-900'
+                    : 'text-gray-400'
+                }
+              />
+              <span className="text-[10px] font-medium text-gray-500 mt-1">
+                Explore
+              </span>
+            </button>
+
+            {/* Center Big Button - Floating */}
+            <button
+              onClick={() => handleNavigation('/student/study')}
+              className="flex flex-col items-center justify-center -mt-6">
+              <div className="bg-blue-500 text-white p-5 rounded-full shadow-2xl border-4 border-white">
+                <Layers size={32} strokeWidth={2.5} />
+              </div>
+            </button>
+
+            {/* Message */}
+            <button
+              onClick={() => handleNavigation('/student/chat')}
+              className="flex flex-col items-center justify-center min-w-[60px] pb-1">
+              <MessageSquare
+                size={24}
+                strokeWidth={2}
+                className={
+                  pathname === '/student/chat'
+                    ? 'text-gray-900'
+                    : 'text-gray-400'
+                }
+              />
+              <span className="text-[10px] font-medium text-gray-500 mt-1">
+                Message
+              </span>
+            </button>
+
+            {/* Profile */}
+            <button
+              onClick={() => handleNavigation('/student/profile')}
+              className="flex flex-col items-center justify-center min-w-[60px] pb-1">
+              <User
+                size={24}
+                strokeWidth={2}
+                className={
+                  pathname === '/student/profile'
+                    ? 'text-gray-900'
+                    : 'text-gray-400'
+                }
+              />
+              <span className="text-[10px] font-medium text-gray-500 mt-1">
+                Profile
+              </span>
+            </button>
+          </div>
+        </div>
       </nav>
     </div>
   )

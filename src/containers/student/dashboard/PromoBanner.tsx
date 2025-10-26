@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence, PanInfo } from 'framer-motion'
+import { useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
 
 interface Promo {
@@ -16,63 +17,58 @@ const promos: Promo[] = [
 ]
 
 export default function PromoBanner() {
-  const [current, setCurrent] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: 'center',
+      containScroll: 'trimSnaps',
+    },
+    [Autoplay({ delay: 5000, stopOnInteraction: false })],
+  )
 
-  // Slide otomatis
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % promos.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
+  const scrollTo = (index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index)
+  }
 
-  // Swipe handler
-  const handleDragEnd = (
-    event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo,
-  ) => {
-    if (info.offset.x < -50) {
-      // swipe kiri → next
-      setCurrent((prev) => (prev + 1) % promos.length)
-    } else if (info.offset.x > 50) {
-      // swipe kanan → prev
-      setCurrent((prev) => (prev - 1 + promos.length) % promos.length)
-    }
+  // Update selected index when slide changes
+  if (emblaApi) {
+    emblaApi.on('select', () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap())
+    })
   }
 
   return (
-    <div className="relative mb-6 w-full h-32 rounded-3xl overflow-hidden shadow-lg">
-      <AnimatePresence initial={false}>
-        <motion.a
-          key={current}
-          href={promos[current].url}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.5 }}
-          className="w-full h-full block relative cursor-pointer"
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={handleDragEnd}>
-          <Image
-            src={promos[current].img}
-            alt={`Promo ${current + 1}`}
-            fill
-            className="object-cover rounded-3xl"
-          />
-        </motion.a>
-      </AnimatePresence>
+    <div className="relative w-full mb-6">
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex gap-4 px-5">
+          {promos.map((promo, index) => (
+            <div key={index} className="flex-[0_0_85%] min-w-0">
+              <a
+                href={promo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full h-40 rounded-3xl overflow-hidden shadow-xl relative">
+                <Image
+                  src={promo.img}
+                  alt={`Promo ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Dots */}
-      <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-2">
+      {/* Dots Indicator */}
+      <div className="flex justify-center gap-1.5 mt-3">
         {promos.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => setCurrent(idx)}
-            className={`w-2 h-2 rounded-full ${
-              current === idx ? 'bg-white' : 'bg-white/50'
+            onClick={() => scrollTo(idx)}
+            className={`h-1.5 rounded-full transition-all ${
+              selectedIndex === idx ? 'bg-gray-800 w-6' : 'bg-gray-300 w-1.5'
             }`}
           />
         ))}
