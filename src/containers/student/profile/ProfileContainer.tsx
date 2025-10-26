@@ -92,43 +92,43 @@ export default function ProfileContainer() {
       icon: <Settings size={20} />,
       label: 'Pengaturan Akun',
       color: 'text-blue-600',
-      bg: 'bg-blue-100',
+      bg: 'bg-blue-50',
     },
     {
       icon: <CreditCard size={20} />,
       label: 'Metode Pembayaran',
       color: 'text-purple-600',
-      bg: 'bg-purple-100',
+      bg: 'bg-purple-50',
     },
     {
       icon: <Award size={20} />,
       label: 'Sertifikat Saya',
       color: 'text-yellow-600',
-      bg: 'bg-yellow-100',
+      bg: 'bg-yellow-50',
     },
     {
       icon: <BookOpen size={20} />,
       label: 'Riwayat Pembelajaran',
       color: 'text-emerald-600',
-      bg: 'bg-emerald-100',
+      bg: 'bg-emerald-50',
     },
     {
       icon: <Bell size={20} />,
       label: 'Notifikasi',
       color: 'text-orange-600',
-      bg: 'bg-orange-100',
+      bg: 'bg-orange-50',
     },
     {
       icon: <Shield size={20} />,
       label: 'Privasi & Keamanan',
       color: 'text-red-600',
-      bg: 'bg-red-100',
+      bg: 'bg-red-50',
     },
     {
       icon: <HelpCircle size={20} />,
       label: 'Bantuan & Dukungan',
       color: 'text-indigo-600',
-      bg: 'bg-indigo-100',
+      bg: 'bg-indigo-50',
     },
   ]
 
@@ -172,162 +172,156 @@ export default function ProfileContainer() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-white pb-24">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-500 text-white px-6 pt-8 pb-28 rounded-b-[40px] shadow-lg">
-        <div className="flex justify-between items-center mb-8">
+      <div className="bg-white px-5 pt-12 pb-6">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold">Profil Saya</h1>
-            <p className="text-sm opacity-80">Selamat datang kembali!</p>
+            <h1 className="text-2xl font-bold text-gray-800">Profil Saya</h1>
+            <p className="text-xs text-gray-500">Selamat datang kembali!</p>
           </div>
           <button
             onClick={() => setIsEditing(!isEditing)}
-            className="bg-white bg-opacity-20 p-3 rounded-2xl backdrop-blur-sm hover:bg-opacity-30 transition">
-            <Edit size={20} />
+            className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100">
+            <Edit size={20} className="text-gray-600" />
           </button>
         </div>
-      </div>
 
-      <div className="px-6 -mt-24">
-        {/* Profile Info */}
-        <div className="bg-white rounded-3xl shadow-xl p-6 mb-6">
-          <div className="flex items-center gap-5 mb-6">
-            <div className="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full w-20 h-20 flex items-center justify-center text-4xl">
+        {/* Profile Card */}
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-5 text-white shadow-lg">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-3xl">
               {userProfile.avatar}
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-gray-800">
-                {userProfile.name}
-              </h2>
-              <p className="text-sm text-gray-500">
+              <h2 className="text-lg font-bold">{userProfile.name}</h2>
+              <p className="text-xs text-white/80">
                 Member sejak {userProfile.joinDate}
               </p>
-              <span className="mt-2 inline-block bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium">
-                ⭐ Active Learner
-              </span>
             </div>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-3 text-gray-600 mb-6">
-            <div className="flex items-center gap-3 text-sm">
-              <Mail size={18} className="text-emerald-500" />{' '}
-              {userProfile.email}
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 space-y-2">
+            <div className="flex items-center gap-2 text-xs">
+              <Mail size={14} className="text-white/80" />
+              <span className="text-white/90">{userProfile.email}</span>
             </div>
-            <div className="flex items-center gap-3 text-sm">
-              <Phone size={18} className="text-emerald-500" />{' '}
-              {userProfile.phone}
+            <div className="flex items-center gap-2 text-xs">
+              <Phone size={14} className="text-white/80" />
+              <span className="text-white/90">{userProfile.phone}</span>
             </div>
-            <div className="flex items-center gap-3 text-sm">
-              <MapPin size={18} className="text-emerald-500" />{' '}
-              {userProfile.location}
+            <div className="flex items-center gap-2 text-xs">
+              <MapPin size={14} className="text-white/80" />
+              <span className="text-white/90">{userProfile.location}</span>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.map((stat) => {
-              const Icon = stat.icon
-              return (
-                <div
-                  key={stat.id}
-                  className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 shadow-md hover:shadow-lg hover:scale-[1.03] transition duration-300 border border-gray-100 cursor-pointer">
-                  <div
-                    className={`bg-${stat.color}-100 w-12 h-12 rounded-xl flex items-center justify-center mb-3`}>
-                    <Icon size={22} className={`text-${stat.color}-600`} />
-                  </div>
-                  <p className="text-2xl font-bold text-gray-800 mb-1">
-                    {stat.value}
-                  </p>
-                  <p className="text-xs font-medium text-gray-500 mb-1">
-                    {stat.label}
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-gray-400">
-                    <TrendingUp
-                      size={12}
-                      className={`${stat.trendUp ? 'text-green-500' : 'text-gray-400'}`}
-                    />
-                    {stat.trend}
-                  </div>
+      <div className="px-5 py-6">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-4 gap-3 mb-6">
+          {stats.map((stat) => {
+            const Icon = stat.icon
+            return (
+              <div
+                key={stat.id}
+                className="bg-white rounded-2xl p-3 shadow-sm text-center">
+                <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+                  <Icon size={18} className="text-blue-500" />
                 </div>
-              )
-            })}
-          </div>
+                <p className="text-xl font-bold text-gray-800">{stat.value}</p>
+                <p className="text-[9px] text-gray-500 leading-tight">
+                  {stat.label}
+                </p>
+              </div>
+            )
+          })}
         </div>
 
         {/* Achievements */}
         <div className="mb-6">
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <Trophy className="text-yellow-500" size={20} /> Pencapaian
-            </h2>
-            <button className="text-emerald-600 text-sm font-medium hover:underline">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
+              <Trophy className="text-yellow-500" size={18} />
+              Pencapaian
+            </h3>
+            <button className="text-xs text-blue-500 hover:underline">
               Lihat Semua
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             {achievements.map((ach) => (
               <div
                 key={ach.id}
-                className="bg-white rounded-2xl shadow-md p-4 text-center hover:shadow-lg hover:scale-[1.03] transition">
-                <div className="text-4xl mb-2">{ach.icon}</div>
-                <h3 className="font-semibold text-gray-800 text-sm mb-1">
+                className="bg-white rounded-2xl p-3 shadow-sm text-center">
+                <div className="text-3xl mb-1">{ach.icon}</div>
+                <h4 className="font-semibold text-gray-800 text-[10px] mb-0.5">
                   {ach.title}
-                </h3>
-                <p className="text-xs text-gray-500">{ach.description}</p>
+                </h4>
+                <p className="text-[8px] text-gray-500 leading-tight">
+                  {ach.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Menu */}
-        <div className="bg-white rounded-3xl shadow-md overflow-hidden mb-6">
-          {menuItems.map((item, i) => (
-            <button
-              key={i}
-              className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 border-b border-gray-100 last:border-none transition">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`${item.bg} w-10 h-10 rounded-xl flex items-center justify-center`}>
-                  <span className={item.color}>{item.icon}</span>
+        {/* Menu Items */}
+        <div className="mb-6">
+          <h3 className="text-base font-semibold text-gray-800 mb-3">
+            Pengaturan
+          </h3>
+          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            {menuItems.map((item, i) => (
+              <button
+                key={i}
+                className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-gray-50 border-b border-gray-100 last:border-none transition">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`${item.bg} w-9 h-9 rounded-xl flex items-center justify-center`}>
+                    <span className={item.color}>{item.icon}</span>
+                  </div>
+                  <span className="text-gray-800 font-medium text-sm">
+                    {item.label}
+                  </span>
                 </div>
-                <span className="text-gray-800 font-medium text-sm">
-                  {item.label}
-                </span>
-              </div>
-              <ChevronRight size={20} className="text-gray-400" />
-            </button>
-          ))}
+                <ChevronRight size={18} className="text-gray-400" />
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Recent Activity */}
         <div className="mb-6">
-          <h2 className="text-lg font-bold text-gray-800 mb-3">
+          <h3 className="text-base font-semibold text-gray-800 mb-3">
             Aktivitas Terbaru
-          </h2>
-          <div className="space-y-3">
+          </h3>
+          <div className="space-y-2">
             {recentActivity.map((act) => (
               <div
                 key={act.id}
-                className="bg-white rounded-2xl shadow-md p-4 flex items-start gap-3 hover:shadow-lg transition">
+                className="bg-white rounded-2xl shadow-sm p-3 flex items-start gap-3">
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                     act.type === 'class'
-                      ? 'bg-blue-100 text-blue-600'
+                      ? 'bg-blue-50 text-blue-500'
                       : act.type === 'achievement'
-                        ? 'bg-yellow-100 text-yellow-600'
-                        : 'bg-emerald-100 text-emerald-600'
+                        ? 'bg-yellow-50 text-yellow-500'
+                        : 'bg-emerald-50 text-emerald-500'
                   }`}>
                   {act.type === 'class' && <BookOpen size={18} />}
                   {act.type === 'achievement' && <Star size={18} />}
                   {act.type === 'payment' && <CreditCard size={18} />}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-800 text-sm">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-gray-800 text-sm">
                     {act.title}
-                  </h3>
-                  <p className="text-xs text-gray-500">{act.description}</p>
-                  <p className="text-[11px] text-gray-400 mt-1">{act.date}</p>
+                  </h4>
+                  <p className="text-xs text-gray-500 line-clamp-1">
+                    {act.description}
+                  </p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">{act.date}</p>
                 </div>
               </div>
             ))}
@@ -337,7 +331,7 @@ export default function ProfileContainer() {
         {/* Logout */}
         <Link
           href="/"
-          className="w-full bg-white rounded-2xl shadow-md py-4 flex items-center justify-center gap-2 text-red-600 font-semibold hover:bg-red-50 transition">
+          className="w-full bg-white rounded-2xl shadow-sm py-3.5 flex items-center justify-center gap-2 text-red-500 font-semibold hover:bg-red-50 transition">
           <LogOut size={18} />
           Keluar
         </Link>
