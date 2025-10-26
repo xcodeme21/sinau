@@ -11,12 +11,12 @@ import {
   BookOpen,
 } from 'lucide-react'
 import Link from 'next/link'
-import { InputField } from '@/components/InputField'
 import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/Button'
+import MobileInput from '@/components/MobileInput'
+import Button from '@/components/Button'
 
 const schema = z
   .object({
@@ -36,6 +36,11 @@ const schema = z
     message: 'Password tidak cocok',
     path: ['confirmPassword'],
   })
+
+const variantMap: Record<'student' | 'teacher', 'primary' | 'success'> = {
+  student: 'primary',
+  teacher: 'success',
+}
 
 export default function RegisterPage() {
   const searchParams = useSearchParams()
@@ -102,7 +107,7 @@ export default function RegisterPage() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex-1 overflow-y-auto px-4 pt-6 pb-24 space-y-4">
           <div>
-            <InputField
+            <MobileInput
               icon={<User className="w-5 h-5 text-gray-400" />}
               label="Nama Lengkap"
               placeholder={
@@ -120,7 +125,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <InputField
+            <MobileInput
               icon={<Mail className="w-5 h-5 text-gray-400" />}
               type="email"
               label="Email"
@@ -135,7 +140,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <InputField
+            <MobileInput
               icon={<Phone className="w-5 h-5 text-gray-400" />}
               type="tel"
               label="Nomor Telepon"
@@ -150,7 +155,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <InputField
+            <MobileInput
               icon={<Lock className="w-5 h-5 text-gray-400" />}
               type="password"
               label="Password"
@@ -165,7 +170,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <InputField
+            <MobileInput
               icon={<Lock className="w-5 h-5 text-gray-400" />}
               type="password"
               label="Konfirmasi Password"
@@ -214,9 +219,8 @@ export default function RegisterPage() {
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
         <Button
           type="submit"
-          form="registerForm"
           disabled={!agreeToTerms}
-          variant={activeTab}>
+          variant={variantMap[activeTab]}>
           Daftar Sekarang
         </Button>
       </div>

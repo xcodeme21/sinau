@@ -1,113 +1,118 @@
 'use client'
 
-import { Mail, ArrowLeft, GraduationCap, BookOpen } from 'lucide-react'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { InputField } from '@/components/InputField'
 import { useState } from 'react'
-import { Button } from '@/components/Button'
-
-const schema = z.object({
-  email: z.string().email('Email tidak valid'),
-})
-
-type FormData = z.infer<typeof schema>
+import Link from 'next/link'
+import { ArrowLeft, Check } from 'lucide-react'
+import {
+  MobileInput,
+  PrimaryButton,
+  SegmentedControl,
+} from '@/components/auth/FormElements'
 
 export default function ForgotPasswordPage() {
-  const [activeTab, setActiveTab] = useState<'student' | 'teacher'>('student')
+  const [role, setRole] = useState<'student' | 'teacher'>('student')
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
+  const [sent, setSent] = useState(false)
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    mode: 'onChange',
-    defaultValues: { email: '' },
-  })
-
-  const handleTabClick = (tab: 'student' | 'teacher') => {
-    setActiveTab(tab)
+  const handleSubmit = () => {
+    if (!email.match(/\S+@\S+\.\S+/)) {
+      setError('Email tidak valid')
+      return
+    }
+    setSent(true)
   }
 
-  const onSubmit = async (data: FormData) => {
-    const payload = { ...data, role: activeTab }
-    console.log('Reset password request:', payload)
+  if (sent) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center p-6">
+        <div className="max-w-sm w-full text-center space-y-6">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+            <Check className="w-10 h-10 text-green-600" />
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Cek Email Anda
+            </h2>
+            <p className="text-gray-500 text-sm">
+              Kami telah mengirim link reset ke <br />
+              <span className="font-medium text-gray-900">{email}</span>
+            </p>
+          </div>
+
+          <div className="bg-blue-50 rounded-2xl p-4">
+            <p className="text-sm text-blue-900">
+              Link berlaku 1 jam. Cek folder spam jika tidak ada di inbox.
+            </p>
+          </div>
+
+          <Link href="/auth/login">
+            <PrimaryButton onClick={() => {}} variant="blue">
+              Kembali ke Login
+            </PrimaryButton>
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="w-full flex items-center h-16 px-4 bg-white shadow-sm fixed top-0 z-10">
-        <Link href="/public" className="p-2 -ml-2">
-          <ArrowLeft className="w-6 h-6 text-gray-700" />
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="h-12" />
+      <div className="px-6 py-4 flex items-center border-b border-gray-100">
+        <Link
+          href="/auth/login"
+          className="p-2 -ml-2 active:scale-95 transition-transform">
+          <ArrowLeft className="w-6 h-6 text-gray-900" />
         </Link>
-        <h1 className="text-lg font-bold text-gray-800 ml-2">Lupa Password</h1>
-      </header>
+        <h1 className="text-xl font-semibold text-gray-900 ml-2">
+          Lupa Password
+        </h1>
+      </div>
 
-      <main className="flex-1 overflow-y-auto px-4 pt-20 pb-24 space-y-6">
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={() => handleTabClick('student')}
-            className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-all ${
-              activeTab === 'student'
-                ? 'bg-purple-500 text-white shadow-sm'
-                : 'bg-white text-gray-700 border border-gray-300'
-            }`}>
-            <GraduationCap className="w-5 h-5" />
-            Siswa
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleTabClick('teacher')}
-            className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-all ${
-              activeTab === 'teacher'
-                ? 'bg-green-500 text-white shadow-sm'
-                : 'bg-white text-gray-700 border border-gray-300'
-            }`}>
-            <BookOpen className="w-5 h-5" />
-            Tutor
-          </button>
+      <div className="flex-1 px-6 py-8 space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Reset Password
+          </h2>
+          <p className="text-gray-500">
+            Masukkan email untuk menerima link reset
+          </p>
         </div>
 
-        <form
-          id="forgotPasswordForm"
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-6">
-          <div>
-            <InputField
-              icon={<Mail className="w-5 h-5 text-gray-400" />}
-              type="email"
-              label="Email"
-              placeholder="email@example.com"
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+        <SegmentedControl value={role} onChange={setRole} />
 
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Masukkan alamat email kamu dan kami akan mengirimkan tautan untuk
-            mengatur ulang password.
+        <MobileInput
+          placeholder="Email"
+          type="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            setError('')
+          }}
+          error={error}
+        />
+
+        <div className="bg-blue-50 rounded-2xl p-4">
+          <p className="text-sm text-blue-900">
+            Link reset akan dikirim ke email Anda dan berlaku selama 1 jam.
           </p>
-        </form>
-      </main>
+        </div>
 
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
-        <Button
-          type="submit"
-          form="forgotPasswordForm"
-          disabled={!isValid || isSubmitting}
-          variant={activeTab}
-          loading={isSubmitting}>
-          Kirim Tautan Reset
-        </Button>
+        <PrimaryButton
+          onClick={handleSubmit}
+          disabled={!email}
+          variant={role === 'student' ? 'purple' : 'green'}>
+          Kirim Link
+        </PrimaryButton>
+
+        <p className="text-center text-gray-500">
+          Ingat password?{' '}
+          <Link href="/auth/login" className="font-semibold text-gray-900">
+            Masuk
+          </Link>
+        </p>
       </div>
     </div>
   )
