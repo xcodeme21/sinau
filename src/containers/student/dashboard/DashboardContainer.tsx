@@ -14,6 +14,8 @@ import {
   Clock,
 } from 'lucide-react'
 import PromoBanner from '@/containers/student/dashboard/PromoBanner'
+import TeacherCard from '@/components/ui/TeacherCard'
+import NotificationPanel from '@/components/ui/NotificationPanel'
 
 interface Teacher {
   id: number
@@ -38,6 +40,7 @@ interface Category {
 
 export default function DashboardContainer() {
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [showNotif, setShowNotif] = useState(false)
 
   const categories: Category[] = [
     { id: 'all', name: 'Semua', icon: '📚' },
@@ -133,10 +136,16 @@ export default function DashboardContainer() {
             <button className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100">
               <Settings size={20} className="text-gray-600" />
             </button>
-            <button className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100 relative">
+            <button
+              onClick={() => setShowNotif(!showNotif)}
+              className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100 relative">
               <Bell size={20} className="text-gray-600" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
+            <NotificationPanel
+              show={showNotif}
+              onClose={() => setShowNotif(false)}
+            />
           </div>
         </div>
 
@@ -228,82 +237,7 @@ export default function DashboardContainer() {
 
         <div className="space-y-3">
           {filteredTeachers.map((teacher) => (
-            <div
-              key={teacher.id}
-              className="bg-white rounded-2xl p-3 shadow-sm border border-gray-100">
-              <div className="flex gap-3">
-                {/* Image */}
-                <div className="relative flex-shrink-0">
-                  <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-4xl">
-                    {teacher.image}
-                  </div>
-                  {teacher.discount && (
-                    <div className="absolute top-1 left-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
-                      {teacher.discount}
-                    </div>
-                  )}
-                </div>
-
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-gray-800 mb-0.5">
-                    {teacher.name}
-                  </h4>
-                  <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-                    <span>⚡</span>
-                    {teacher.subject}
-                  </p>
-
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex items-center gap-1">
-                      <Star
-                        size={12}
-                        className="text-yellow-500 fill-yellow-500"
-                      />
-                      <span className="text-xs font-medium text-gray-700">
-                        {teacher.rating}
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        ({teacher.reviews})
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="flex items-center gap-1">
-                      <MapPin size={12} className="text-gray-400" />
-                      <span className="text-xs text-gray-500">
-                        {teacher.location}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 mb-2">
-                    <Clock size={12} className="text-gray-400" />
-                    <span className="text-xs text-gray-500">
-                      {teacher.schedule}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-lg font-bold text-blue-500">
-                        {teacher.price}
-                      </span>
-                      <span className="text-xs text-gray-500"> /jam</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <button className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                        <Share2 size={16} className="text-gray-600" />
-                      </button>
-                      <button className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50">
-                        <Heart size={16} className="text-gray-600" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <TeacherCard key={teacher.id} teacher={teacher} />
           ))}
         </div>
       </div>

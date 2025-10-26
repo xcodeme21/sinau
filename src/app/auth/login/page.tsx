@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import MobileInput from '@/components/MobileInput'
 import Button from '@/components/Button'
-import { SegmentedControl } from '@/components/auth/FormElements'
+import { SegmentedControl } from '@/components/ui/FormElements'
 
 // --- Schema Zod ---
 const loginSchema = z.object({

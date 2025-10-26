@@ -7,7 +7,7 @@ import {
   MobileInput,
   PrimaryButton,
   SegmentedControl,
-} from '@/components/auth/FormElements'
+} from '@/components/ui/FormElements'
 
 export default function RegisterPage() {
   const [role, setRole] = useState<'student' | 'teacher'>('student')
