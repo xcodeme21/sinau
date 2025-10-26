@@ -60,7 +60,7 @@ export default function TeacherCard({ teacher }: TeacherCardProps) {
         <div className="flex items-center justify-between mt-3">
           <div>
             <span className="text-base font-bold text-blue-600">
-              Rp {teacher.price}
+              {teacher.price}
             </span>
             <span className="text-xs text-gray-500"> /jam</span>
           </div>
