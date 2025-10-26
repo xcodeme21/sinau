@@ -2,19 +2,7 @@
 
 import React from 'react'
 import { Star, MapPin, Clock, Share2, Heart } from 'lucide-react'
-
-interface Teacher {
-  id: number
-  name: string
-  subject: string
-  rating: number
-  reviews: string
-  price: string
-  image: string
-  discount?: string
-  location: string
-  schedule: string
-}
+import { Teacher } from '@/types/types'
 
 interface TeacherCardProps {
   teacher: Teacher

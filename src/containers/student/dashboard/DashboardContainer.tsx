@@ -3,34 +3,16 @@
 import { useState } from 'react'
 import {
   Bell,
-  Star,
   Search,
   Settings,
   Layers,
   ChevronRight,
   MapPin,
-  Share2,
-  Heart,
-  Clock,
 } from 'lucide-react'
 import PromoBanner from '@/containers/student/dashboard/PromoBanner'
 import TeacherCard from '@/components/ui/TeacherCard'
 import NotificationPanel from '@/components/ui/NotificationPanel'
-
-interface Teacher {
-  id: number
-  name: string
-  subject: string
-  category: string
-  rating: number
-  reviews: string
-  price: string
-  image: string
-  certified: boolean
-  discount?: string
-  location: string
-  schedule: string
-}
+import { Teacher } from '@/types/types'
 
 interface Category {
   id: string
@@ -56,12 +38,16 @@ export default function DashboardContainer() {
       subject: 'Gitar & Musik',
       category: 'music',
       rating: 4.9,
-      reviews: '2k',
-      price: '190.000',
-      image: '🎸',
-      certified: true,
-      discount: '20% OFF',
+      reviews: 127,
+      price: 'Rp 150.000',
       location: 'Jakarta Selatan',
+      experience: '8 tahun',
+      image: '🎸',
+      available: 'Senin, Rabu, Jumat',
+      certified: true,
+      bio: 'Tutor musik profesional dengan spesialisasi gitar klasik dan modern',
+      students: 45,
+      discount: '20% OFF',
       schedule: 'Senin, Rabu, Jumat',
     },
     {
@@ -69,13 +55,17 @@ export default function DashboardContainer() {
       name: 'Sarah Wijaya',
       subject: 'Bahasa Inggris',
       category: 'language',
-      rating: 4.2,
-      reviews: '6k',
-      price: '170.000',
-      image: '📖',
-      certified: true,
-      discount: '15% OFF',
+      rating: 5.0,
+      reviews: 203,
+      price: 'Rp 200.000',
       location: 'Jakarta Pusat',
+      experience: '10 tahun',
+      image: '📖',
+      available: 'Setiap hari',
+      certified: true,
+      bio: 'Native speaker dengan sertifikasi TESOL dan IELTS',
+      students: 89,
+      discount: '15% OFF',
       schedule: 'Setiap hari',
     },
     {
@@ -83,13 +73,17 @@ export default function DashboardContainer() {
       name: 'Andi Prasetyo',
       subject: 'Web Development',
       category: 'coding',
-      rating: 4.9,
-      reviews: '2k',
-      price: '190.000',
-      image: '👨‍💻',
-      certified: true,
-      discount: '20% OFF',
+      rating: 4.8,
+      reviews: 89,
+      price: 'Rp 250.000',
       location: 'Online',
+      experience: '6 tahun',
+      image: '👨‍💻',
+      available: 'Selasa, Kamis, Sabtu',
+      certified: true,
+      bio: 'Full-stack developer dengan pengalaman di startup teknologi',
+      students: 67,
+      discount: '10% OFF',
       schedule: 'Selasa, Kamis, Sabtu',
     },
     {
@@ -97,13 +91,16 @@ export default function DashboardContainer() {
       name: 'Linda Kusuma',
       subject: 'Yoga & Fitness',
       category: 'sports',
-      rating: 4.2,
-      reviews: '6k',
-      price: '170.000',
-      image: '🧘‍♀️',
-      certified: true,
-      discount: '10% OFF',
+      rating: 4.9,
+      reviews: 156,
+      price: 'Rp 175.000',
       location: 'Jakarta Barat',
+      experience: '5 tahun',
+      image: '🧘‍♀️',
+      available: 'Senin–Jumat pagi',
+      certified: true,
+      bio: 'Instruktur yoga bersertifikat internasional (RYT-200)',
+      students: 102,
       schedule: 'Senin–Jumat pagi',
     },
   ]

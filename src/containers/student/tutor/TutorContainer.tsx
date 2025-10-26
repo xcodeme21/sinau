@@ -1,49 +1,17 @@
 'use client'
 
 import React, { useState } from 'react'
-import {
-  Search,
-  Filter,
-  MapPin,
-  Star,
-  Clock,
-  Play,
-  Award,
-  Calendar,
-} from 'lucide-react'
-
-interface Teacher {
-  id: number
-  name: string
-  subject: string
-  category: string
-  rating: number
-  reviews: number
-  price: string
-  location: string
-  experience: string
-  image: string
-  available: string
-  certified: boolean
-  bio: string
-  students: number
-}
+import { Search, MapPin } from 'lucide-react'
+import TeacherCard from '@/components/ui/TeacherCard'
+import BottomSheetModal from '@/components/ui/BottomSheetModal'
+import { Teacher } from '@/types/types'
 
 export default function TutorContainer() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedLocation, setSelectedLocation] = useState('all')
+  const [showLocationModal, setShowLocationModal] = useState(false)
   const [sortBy, setSortBy] = useState('rating')
-
-  const categories = [
-    { id: 'all', name: 'Semua', icon: '📚' },
-    { id: 'music', name: 'Musik', icon: '🎵' },
-    { id: 'language', name: 'Bahasa', icon: '💬' },
-    { id: 'coding', name: 'Coding', icon: '💻' },
-    { id: 'sports', name: 'Olahraga', icon: '⚽' },
-    { id: 'art', name: 'Seni', icon: '🎨' },
-    { id: 'math', name: 'Matematika', icon: '🔢' },
-    { id: 'science', name: 'Sains', icon: '🔬' },
-  ]
 
   const teachers: Teacher[] = [
     {
@@ -53,14 +21,16 @@ export default function TutorContainer() {
       category: 'music',
       rating: 4.9,
       reviews: 127,
-      price: 'Rp 150.000/jam',
+      price: 'Rp 150.000',
       location: 'Jakarta Selatan',
       experience: '8 tahun',
       image: '🎸',
       available: 'Senin, Rabu, Jumat',
       certified: true,
-      bio: 'Guru musik profesional dengan spesialisasi gitar klasik dan modern',
+      bio: 'Tutor musik profesional dengan spesialisasi gitar klasik dan modern',
       students: 45,
+      discount: '20% OFF',
+      schedule: 'Senin, Rabu, Jumat',
     },
     {
       id: 2,
@@ -69,7 +39,7 @@ export default function TutorContainer() {
       category: 'language',
       rating: 5.0,
       reviews: 203,
-      price: 'Rp 200.000/jam',
+      price: 'Rp 200.000',
       location: 'Jakarta Pusat',
       experience: '10 tahun',
       image: '📖',
@@ -77,6 +47,8 @@ export default function TutorContainer() {
       certified: true,
       bio: 'Native speaker dengan sertifikasi TESOL dan IELTS',
       students: 89,
+      discount: '15% OFF',
+      schedule: 'Setiap hari',
     },
     {
       id: 3,
@@ -85,7 +57,7 @@ export default function TutorContainer() {
       category: 'coding',
       rating: 4.8,
       reviews: 89,
-      price: 'Rp 250.000/jam',
+      price: 'Rp 250.000',
       location: 'Online',
       experience: '6 tahun',
       image: '👨‍💻',
@@ -93,6 +65,8 @@ export default function TutorContainer() {
       certified: true,
       bio: 'Full-stack developer dengan pengalaman di startup teknologi',
       students: 67,
+      discount: '10% OFF',
+      schedule: 'Selasa, Kamis, Sabtu',
     },
     {
       id: 4,
@@ -101,37 +75,51 @@ export default function TutorContainer() {
       category: 'sports',
       rating: 4.9,
       reviews: 156,
-      price: 'Rp 175.000/sesi',
+      price: 'Rp 175.000',
       location: 'Jakarta Barat',
       experience: '5 tahun',
       image: '🧘‍♀️',
-      available: 'Senin-Jumat pagi',
+      available: 'Senin–Jumat pagi',
       certified: true,
       bio: 'Instruktur yoga bersertifikat internasional (RYT-200)',
       students: 102,
-    },
-    {
-      id: 5,
-      name: 'Rudi Hartono',
-      subject: 'Matematika SMA',
-      category: 'math',
-      rating: 4.7,
-      reviews: 78,
-      price: 'Rp 125.000/jam',
-      location: 'Jakarta Timur',
-      experience: '7 tahun',
-      image: '📐',
-      available: 'Senin-Kamis sore',
-      certified: true,
-      bio: 'Spesialis persiapan ujian masuk PTN dan Olimpiade Matematika',
-      students: 56,
+      schedule: 'Senin–Jumat pagi',
     },
   ]
 
-  const filteredTeachers = teachers
+  const categories = [
+    { id: 'all', name: 'Semua', icon: '📘' },
+    { id: 'music', name: 'Musik', icon: '🎵' },
+    { id: 'language', name: 'Bahasa', icon: '💬' },
+    { id: 'coding', name: 'Coding', icon: '💻' },
+    { id: 'sports', name: 'Olahraga', icon: '⚽' },
+    { id: 'art', name: 'Seni', icon: '🎨' },
+  ]
+
+  const locations = [
+    { id: 'all', name: 'Semua Lokasi' },
+    { id: 'Jakarta Selatan', name: 'Jakarta Selatan' },
+    { id: 'Jakarta Pusat', name: 'Jakarta Pusat' },
+    { id: 'Jakarta Barat', name: 'Jakarta Barat' },
+    { id: 'Online', name: 'Online' },
+  ]
+
+  // Filtering logic, termasuk handle lokasi yg user search tapi tidak ada di daftar
+  const filtered = teachers
     .filter(
       (t) => selectedCategory === 'all' || t.category === selectedCategory,
     )
+    .filter((t) => {
+      if (selectedLocation === 'all') return true
+      const locationExists = locations.some(
+        (loc) => loc.id === selectedLocation,
+      )
+      if (!locationExists) {
+        // jika lokasi tidak ada di daftar, tampilkan Tutor Online
+        return t.location === 'Online'
+      }
+      return t.location === selectedLocation
+    })
     .filter(
       (t) =>
         t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -139,159 +127,115 @@ export default function TutorContainer() {
     )
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 pb-20">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 pt-8 pb-20 rounded-b-3xl shadow-lg">
-        <h1 className="text-2xl font-bold mb-6">Temukan Guru Terbaik</h1>
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div className="px-5 pt-6 pb-4">
+          <h1 className="text-xl font-semibold text-gray-800 tracking-tight mb-4">
+            Temukan Tutor Terbaik ✨
+          </h1>
 
-        {/* Search Bar */}
-        <div className="relative">
-          <Search
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-            size={20}
-          />
-          <input
-            type="text"
-            placeholder="Cari guru atau mata pelajaran..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-          />
-        </div>
-      </div>
+          {/* Search Bar + Location Button */}
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={18}
+              />
+              <input
+                type="text"
+                placeholder="Cari Tutor atau mata pelajaran..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-gray-100 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:bg-white transition-all duration-200"
+              />
+            </div>
 
-      <div className="px-6 -mt-12">
-        {/* Categories */}
-        <div className="bg-white rounded-2xl shadow-lg p-4 mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-800">Kategori</h3>
-            <button className="text-emerald-600 text-sm font-medium">
-              <Filter size={18} />
+            <button
+              onClick={() => setShowLocationModal(true)}
+              className="p-3 rounded-2xl bg-gray-100 hover:bg-emerald-100 transition-all duration-200">
+              <MapPin className="text-emerald-600" size={20} />
             </button>
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-2">
+        </div>
+
+        {/* Category Scroll */}
+        <div className="px-5 pb-3 overflow-x-auto hide-scrollbar">
+          <div className="flex gap-2">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
                   selectedCategory === cat.id
                     ? 'bg-emerald-500 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-emerald-300 hover:text-emerald-600'
                 }`}>
                 <span>{cat.icon}</span>
-                <span className="text-sm font-medium">{cat.name}</span>
+                {cat.name}
               </button>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Stats */}
-        <div className="flex items-center justify-between mb-4">
-          <p className="text-gray-600 text-sm">
-            Ditemukan{' '}
-            <span className="font-bold text-emerald-600">
-              {filteredTeachers.length}
-            </span>{' '}
-            guru
-          </p>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-300">
-            <option value="rating">Rating Tertinggi</option>
-            <option value="price-low">Harga Terendah</option>
-            <option value="price-high">Harga Tertinggi</option>
-            <option value="experience">Pengalaman</option>
-          </select>
-        </div>
+      {/* Result & Sort */}
+      <div className="flex items-center justify-between px-5 py-3">
+        <p className="text-gray-600 text-sm">
+          Ditemukan{' '}
+          <span className="font-semibold text-emerald-600">
+            {filtered.length}
+          </span>{' '}
+          tutor
+        </p>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+          <option value="rating">Rating Tertinggi</option>
+          <option value="price-low">Harga Terendah</option>
+          <option value="price-high">Harga Tertinggi</option>
+          <option value="experience">Pengalaman</option>
+        </select>
+      </div>
 
-        {/* Teacher List */}
-        <div className="space-y-4">
-          {filteredTeachers.map((teacher) => (
-            <div
-              key={teacher.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-              <div className="p-5">
-                <div className="flex gap-4 mb-4">
-                  <div className="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl w-20 h-20 flex items-center justify-center text-4xl flex-shrink-0">
-                    {teacher.image}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-1">
-                      <div>
-                        <h3 className="font-bold text-gray-800 text-lg">
-                          {teacher.name}
-                        </h3>
-                        <p className="text-emerald-600 text-sm font-medium">
-                          {teacher.subject}
-                        </p>
-                      </div>
-                      {teacher.certified && (
-                        <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">
-                          <Award size={12} className="inline mr-1" />
-                          Verified
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center">
-                        <Star
-                          size={14}
-                          className="text-yellow-500 fill-yellow-500"
-                        />
-                        <span className="text-sm font-bold text-gray-800 ml-1">
-                          {teacher.rating}
-                        </span>
-                        <span className="text-xs text-gray-500 ml-1">
-                          ({teacher.reviews})
-                        </span>
-                      </div>
-                      <span className="text-gray-300">•</span>
-                      <span className="text-xs text-gray-600">
-                        {teacher.students} siswa
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">
-                      {teacher.bio}
-                    </p>
-                  </div>
-                </div>
+      {/* Teacher List */}
+      <div className="px-5 space-y-3">
+        {filtered.length === 0 ? (
+          <div className="text-center py-10 text-gray-400 text-sm">
+            Tidak ada Tutor ditemukan 😔
+          </div>
+        ) : (
+          filtered.map((teacher) => (
+            <TeacherCard key={teacher.id} teacher={teacher} />
+          ))
+        )}
+      </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="flex items-center text-gray-600">
-                    <MapPin size={14} className="mr-2 text-emerald-500" />
-                    <span className="text-xs">{teacher.location}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <Clock size={14} className="mr-2 text-emerald-500" />
-                    <span className="text-xs">{teacher.experience}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1">Tarif</p>
-                    <p className="text-lg font-bold text-emerald-600">
-                      {teacher.price}
-                    </p>
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-200 transition">
-                      <Play size={14} className="inline mr-1" />
-                      Demo
-                    </button>
-                    <button className="bg-emerald-500 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-emerald-600 transition">
-                      <Calendar size={14} className="inline mr-1" />
-                      Pesan
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* BottomSheet Location */}
+      <BottomSheetModal
+        show={showLocationModal}
+        title="Pilih Lokasi 📍"
+        onClose={() => setShowLocationModal(false)}>
+        <div className="grid grid-cols-2 gap-3">
+          {locations.map((loc) => (
+            <button
+              key={loc.id}
+              onClick={() => {
+                setSelectedLocation(loc.id)
+                setShowLocationModal(false)
+              }}
+              className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all ${
+                selectedLocation === loc.id
+                  ? 'bg-emerald-100 text-emerald-700 border-emerald-300'
+                  : 'bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:text-emerald-600'
+              }`}>
+              <MapPin size={14} />
+              {loc.name}
+            </button>
           ))}
         </div>
-      </div>
+      </BottomSheetModal>
     </div>
   )
 }
