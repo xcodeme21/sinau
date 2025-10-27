@@ -22,9 +22,12 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import EditProfileContainer from '@/containers/student/profile/EditProfileContainer'
 
 export default function ProfileContainer() {
-  const [isEditing, setIsEditing] = useState(false)
+  const router = useRouter()
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const userProfile = {
     name: 'Agus Siswanto',
@@ -93,42 +96,49 @@ export default function ProfileContainer() {
       label: 'Pengaturan Akun',
       color: 'text-blue-600',
       bg: 'bg-blue-50',
+      href: '/student/profile/settings',
     },
     {
       icon: <CreditCard size={20} />,
       label: 'Metode Pembayaran',
       color: 'text-purple-600',
       bg: 'bg-purple-50',
+      href: '/student/profile/payment-methods',
     },
     {
       icon: <Award size={20} />,
       label: 'Sertifikat Saya',
       color: 'text-yellow-600',
       bg: 'bg-yellow-50',
+      href: '/student/profile/certificates',
     },
     {
       icon: <BookOpen size={20} />,
       label: 'Riwayat Pembelajaran',
       color: 'text-emerald-600',
       bg: 'bg-emerald-50',
+      href: '/student/profile/learning-history',
     },
     {
       icon: <Bell size={20} />,
       label: 'Notifikasi',
       color: 'text-orange-600',
       bg: 'bg-orange-50',
+      href: '/student/profile/notification-settings',
     },
     {
       icon: <Shield size={20} />,
       label: 'Privasi & Keamanan',
       color: 'text-red-600',
       bg: 'bg-red-50',
+      href: '/student/profile/privacy',
     },
     {
       icon: <HelpCircle size={20} />,
       label: 'Bantuan & Dukungan',
       color: 'text-indigo-600',
       bg: 'bg-indigo-50',
+      href: '/student/profile/help',
     },
   ]
 
@@ -181,7 +191,7 @@ export default function ProfileContainer() {
             <p className="text-xs text-gray-500">Selamat datang kembali!</p>
           </div>
           <button
-            onClick={() => setIsEditing(!isEditing)}
+            onClick={() => setShowEditModal(true)}
             className="p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100">
             <Edit size={20} className="text-gray-600" />
           </button>
@@ -276,6 +286,7 @@ export default function ProfileContainer() {
             {menuItems.map((item, i) => (
               <button
                 key={i}
+                onClick={() => router.push(item.href)}
                 className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-gray-50 border-b border-gray-100 last:border-none transition">
                 <div className="flex items-center gap-3">
                   <div
@@ -335,6 +346,10 @@ export default function ProfileContainer() {
           <LogOut size={18} />
           Keluar
         </Link>
+
+        {showEditModal && (
+          <EditProfileContainer onClose={() => setShowEditModal(false)} />
+        )}
       </div>
     </div>
   )
